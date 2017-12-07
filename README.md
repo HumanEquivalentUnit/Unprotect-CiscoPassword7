@@ -1,6 +1,6 @@
 ## Unprotect-CiscoPassword7
 
-Script / module to decrypt Cisco crypt 7 encrypted passwords from switch and router configs.
+PowerShell script which decrypts Cisco password 7 encrypted passwords from switch and router configs.
 
 ### Example
 
