@@ -9,7 +9,7 @@
    PS C:\> Unprotect-CiscoPassword7 '025756085F'
    1234
 .EXAMPLE
-   PS C:\> Unprotect-CiscoPassword7 '025756085F'
+   PS C:\> Unprotect-CiscoPassword7 -Password7Text '025756085F'
    1234
 .EXAMPLE
    PS C:\> '025756085F' | Unprotect-CiscoPassword7
@@ -48,7 +48,7 @@ function Unprotect-CiscoPassword7 {
                     $_ = (-split $_)[-1]
                 }
 
-                ($_.Length % 2 -eq 0) -and ($_ -match '^[0-9][0-9]') -and (([int]$_.Substring(0,2)) -le 15)
+                ($_.Length % 2 -eq 0) -and ($_ -match '^[0-9][0-9]') -and (([int]$_.Substring(0, 2)) -le 15)
             })]
         [string]$Password7Text
     )
@@ -62,14 +62,14 @@ function Unprotect-CiscoPassword7 {
     
     Process
     {
-        # Handle if the input is just the password, or the full congif line
+        # Handle if the input is just the password, or the full config line
         if ($Password7Text -match 'password 7')
         {
             $Password7Text = (-split $Password7Text)[-1]
         }
 
-        # First two characters represent the Offset into the key, where the decryption starts.
-        $seed = [int]$Password7Text.substring(0,2)
+        # First two characters' value is the offset into the key where the decryption starts.
+        $seed = [int]$Password7Text.substring(0, 2)
 
         # Take two characters at a time from the rest of the string
         # convert them from hex to decimal, and XOR with the next key position
